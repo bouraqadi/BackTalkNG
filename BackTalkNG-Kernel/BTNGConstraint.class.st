@@ -23,7 +23,7 @@ BTNGConstraint >> filter [
 
 { #category : #testing }
 BTNGConstraint >> isConsistent [
-	"A constraint is consistant when it is satisfied by the current variables' values"
+	"A constraint is consistent when it is satisfied by the current variables' values"
 
 	^ self subclassResponsibility
 ]
@@ -40,7 +40,7 @@ BTNGConstraint >> isNotConsistent [
 
 { #category : #testing }
 BTNGConstraint >> isSatisfied [
-	"A constraint is satisfied when it is both instantiated and consistant"
+	"A constraint is satisfied when it is both instantiated and consistent"
 
 	^ self isInstantiated and: [self isConsistent]
 ]
@@ -70,5 +70,10 @@ BTNGConstraint >> printOn: aStream [
 
 { #category : #printing }
 BTNGConstraint >> printVariable: var on: aStream [ 
-	var printLableAndCurrentValueOn: aStream
+	var printLabelAndCurrentValueOn: aStream
+]
+
+{ #category : #accessing }
+BTNGConstraint >> variables [ 
+	^self subclassResponsibility 
 ]

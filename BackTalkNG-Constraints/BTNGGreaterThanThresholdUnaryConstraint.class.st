@@ -1,10 +1,10 @@
 Class {
-	#name : #BTNGGreaterThanThersholdUnaryConstraint,
+	#name : #BTNGGreaterThanThresholdUnaryConstraint,
 	#superclass : #BTNGCompareToValueUnaryConstraint,
 	#category : #'BackTalkNG-Constraints'
 }
 
 { #category : #testing }
-BTNGGreaterThanThersholdUnaryConstraint >> consistencyFor: value [ 
+BTNGGreaterThanThresholdUnaryConstraint >> consistencyFor: value [ 
 	^value > self valueForComparison
 ]

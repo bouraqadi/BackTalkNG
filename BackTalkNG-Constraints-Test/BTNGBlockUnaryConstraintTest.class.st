@@ -19,6 +19,6 @@ BTNGBlockUnaryConstraintTest >> createConstraint [
 { #category : #running }
 BTNGBlockUnaryConstraintTest >> testArcConsistency [
 	constraint enforceArcConsistency.
-	self assert: variable1 valuesToExplore asSet = (6 to: 10) asSet.
+	self assert: variable1 valuesToExplore asSet equals: (6 to: 10) asSet.
 	self assert: constraint isConsistent
 ]

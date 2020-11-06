@@ -20,7 +20,7 @@ BTNGBlockBinaryConstraintTest >> testArcConsistency [
 	| expectedReducedDomain |
 	constraint enforceArcConsistency.
 	expectedReducedDomain := (0 to: 4) asSet.
-	self assert: variable1 valuesToExplore asSet = expectedReducedDomain.
-	self assert: variable2 valuesToExplore asSet = expectedReducedDomain.
+	self assert: variable1 valuesToExplore asSet equals: expectedReducedDomain.
+	self assert: variable2 valuesToExplore asSet equals: expectedReducedDomain.
 	self assert: constraint isConsistent
 ]

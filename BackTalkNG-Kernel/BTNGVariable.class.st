@@ -90,7 +90,7 @@ BTNGVariable >> initialize [
 
 { #category : #testing }
 BTNGVariable >> isInstantiated [
-	^ self currentValue ~~ nil
+	^ self currentValue notNil
 ]
 
 { #category : #accessing }
@@ -115,13 +115,14 @@ BTNGVariable >> nextValue [
 	self currentValue
 		ifNotNil: [valuesToExplore remove: self currentValue].
 	nextValue := self valuesToExplore
-				ifNotEmpty: [self valuesToExplore anyOne].
+		ifEmpty: [ nil ]
+		ifNotEmpty: [self valuesToExplore anyOne].
 	self currentValue: nextValue.
 	^ nextValue
 ]
 
 { #category : #printing }
-BTNGVariable >> printLableAndCurrentValueOn: aStream [ 
+BTNGVariable >> printLabelAndCurrentValueOn: aStream [ 
 	aStream
 		nextPutAll: self label;
 		nextPutAll: ' = '.
@@ -130,7 +131,7 @@ BTNGVariable >> printLableAndCurrentValueOn: aStream [
 
 { #category : #printing }
 BTNGVariable >> printOn: aStream [ 
-	self printLableAndCurrentValueOn: aStream.
+	self printLabelAndCurrentValueOn: aStream.
 	self printValuesToExploreOn: aStream
 ]
 

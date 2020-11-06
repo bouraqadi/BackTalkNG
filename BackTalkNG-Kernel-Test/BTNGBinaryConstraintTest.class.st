@@ -50,8 +50,8 @@ BTNGBinaryConstraintTest >> testReferencesAfterVariableRemoval [
 	expectedConstraints := Set with: constraint.
 	expectedVariables := Set with: variable2 with: newVariable.
 	self assert: variable1 constraints isEmpty.
-	self assert: variable2 constraints = expectedConstraints.
-	self assert: constraint variables = expectedVariables
+	self assert: variable2 constraints equals: expectedConstraints.
+	self assert: constraint variables equals: expectedVariables
 ]
 
 { #category : #running }
@@ -59,9 +59,9 @@ BTNGBinaryConstraintTest >> testReferencesOnFromVariables [
 	| expectedConstraints expectedVariables |
 	expectedConstraints := {  constraint} asSet.
 	expectedVariables := {  variable1. variable2} asSet.
-	self assert: variable1 constraints = expectedConstraints.
-	self assert: variable2 constraints = expectedConstraints.
-	self assert: constraint variables = expectedVariables
+	self assert: variable1 constraints equals: expectedConstraints.
+	self assert: variable2 constraints equals: expectedConstraints.
+	self assert: constraint variables equals: expectedVariables
 ]
 
 { #category : #running }

@@ -27,12 +27,12 @@ BTNGSimpleCspSolvingTest >> setUp [
 
 { #category : #running }
 BTNGSimpleCspSolvingTest >> testAllSolutions [
-	self assert: solver allSolutions size = 1
+	self assert: solver allSolutions size equals: 1
 ]
 
 { #category : #running }
 BTNGSimpleCspSolvingTest >> testChangeCurrentVariableAfterSuccessiveForwardStep [
-	| expcetedVariable |
+	| expectedVariable |
 	{variable1. variable2. variable3} do: [:var| var domain: #(1 2 3)].
 	BTNGEqualityConstraint on: variable1 and: variable3.
 	solver currentVariable: variable1.
@@ -41,12 +41,12 @@ BTNGSimpleCspSolvingTest >> testChangeCurrentVariableAfterSuccessiveForwardStep 
 	solver propagateInstantiationOfCurrentVariable.
 	self deny: variable2 domainWipedOut.
 	solver stepForward.
-	self deny: solver currentVariable == variable1.
-	expcetedVariable := solver currentVariable == variable2
+	self deny: solver currentVariable identicalTo: variable1.
+	expectedVariable := solver currentVariable == variable2
 		ifTrue: [variable3]
 		ifFalse: [variable2].  
 	solver stepForward.
-	self assert: solver currentVariable == expcetedVariable
+	self assert: solver currentVariable identicalTo: expectedVariable
 
 ]
 
@@ -63,28 +63,28 @@ BTNGSimpleCspSolvingTest >> testDecomposedSearchSolution [
 	self assert: variable2 domainWipedOut.
 	self assert: variable2 valuesToExplore isEmpty.
 	solver stepBackward.
-	self assert: variable2 valuesToExplore asSet = variable2 domain asSet.
+	self assert: variable2 valuesToExplore asSet equals: variable2 domain asSet.
 	variable1 nextValue.
 	self deny: csp domainWipedOut.
-	self assert: variable1 valuesToExplore asSet = #(2) asSet.
+	self assert: variable1 valuesToExplore asSet equals: #(2) asSet.
 	solver saveContext.
 	solver propagateInstantiationOfCurrentVariable.
-	self assert: variable2 valuesToExplore asArray = #(2 ).
+	self assert: variable2 valuesToExplore asArray equals: #(2 ).
 	solver currentVariable: variable2.
 	variable2 nextValue.
-	self assert: variable2 currentValue = 2.
-	self assert: variable2 valuesToExplore asArray = #(2 ).
+	self assert: variable2 currentValue equals: 2.
+	self assert: variable2 valuesToExplore asArray equals: #(2 ).
 	solver saveContext.
 	solver propagateInstantiationOfCurrentVariable.
-	self assert: variable3 valuesToExplore asArray = #(2).
+	self assert: variable3 valuesToExplore asArray equals: #(2).
 	variable3 nextValue.
-	self assert: (variable3 currentValue = 2).
+	self assert: variable3 currentValue equals: 2.
 	solver currentVariable: variable3.
 	solver saveContext.
 	solver propagateInstantiationOfCurrentVariable.
 	self assert: solver solutionFound.
 	expectedSolution := Dictionary newFrom: {variable1 -> 2. variable2 -> 2. variable3 -> 2}.
-	self assert: solver solution = expectedSolution
+	self assert: solver solution equals: expectedSolution
 ]
 
 { #category : #running }
@@ -97,8 +97,8 @@ BTNGSimpleCspSolvingTest >> testExploreNextValueOfCurrentVariableAfterBacktracki
 	self assert: variable2 valuesToExplore isEmpty.
 	solver stepBackward.
 	solver stepForward.
-	self assert: solver currentVariable == variable1.
-	self assert: variable1 currentValue = 2
+	self assert: solver currentVariable identicalTo: variable1.
+	self assert: variable1 currentValue equals: 2
 ]
 
 { #category : #running }
@@ -106,5 +106,5 @@ BTNGSimpleCspSolvingTest >> testFirstSolution [
 	| expectedSolution |
 	solver firstSolution.
 	expectedSolution := Dictionary newFrom: {variable1 -> 2. variable2 -> 2. variable3 -> 2}.
-	self assert: solver solution = expectedSolution
+	self assert: solver solution equals: expectedSolution
 ]

@@ -30,9 +30,9 @@ BTNGCSPTest >> setUp [
 BTNGCSPTest >> testInitialization [
 	| expectedVariables expectedConstraints |
 	expectedVariables := IdentitySet with: variable1 with: variable2.
-	self assert: csp variables asIdentitySet = expectedVariables.
+	self assert: csp variables asIdentitySet equals: expectedVariables.
 	expectedConstraints := IdentitySet with: constraint.
-	self assert: csp constraints = expectedConstraints.
+	self assert: csp constraints equals: expectedConstraints.
 ]
 
 { #category : #running }
@@ -41,8 +41,8 @@ BTNGCSPTest >> testUnicityOfVariablesOnMultipleAdditions [
 	csp variables add: variable2.
 	csp addVariable: variable2.
 	expectedVariables := IdentitySet with: variable1 with: variable2.
-	self assert: csp variables size = expectedVariables size.
-	self assert: csp variables asIdentitySet = expectedVariables
+	self assert: csp variables size equals: expectedVariables size.
+	self assert: csp variables asIdentitySet equals: expectedVariables
 ]
 
 { #category : #running }
@@ -50,8 +50,8 @@ BTNGCSPTest >> testUnicityOfVariablesOnSettingTheWholeCollection [
 	| expectedVariables |
 	csp variables: {variable2. variable1. variable2. variable2. variable1}.
 	expectedVariables := IdentitySet with: variable1 with: variable2.
-	self assert: csp variables size = expectedVariables size.
-	self assert: csp variables asIdentitySet = expectedVariables
+	self assert: csp variables size equals: expectedVariables size.
+	self assert: csp variables asIdentitySet equals: expectedVariables
 ]
 
 { #category : #running }
@@ -64,9 +64,9 @@ BTNGCSPTest >> testVariableAddition [
 				with: variable2
 				with: variable3
 				with: variable4.
-	self assert: csp variables asIdentitySet = expectedVariables.
+	self assert: csp variables asIdentitySet equals: expectedVariables.
 	expectedConstraints := IdentitySet with: constraint with: constraint2.
-	self assert: csp constraints = expectedConstraints
+	self assert: csp constraints equals: expectedConstraints
 ]
 
 { #category : #running }
@@ -75,8 +75,8 @@ BTNGCSPTest >> testVariableRemoval [
 	csp removeVariable: variable2.
 	expectedVariables := IdentitySet 
 				with: variable1.
-	self assert: csp variables asIdentitySet = expectedVariables.
+	self assert: csp variables asIdentitySet equals: expectedVariables.
 	expectedConstraints := IdentitySet with: constraint.
-	self assert: csp constraints = expectedConstraints.
+	self assert: csp constraints equals: expectedConstraints.
 	self shouldnt: [csp removeVariable: variable2] raise: Exception
 ]

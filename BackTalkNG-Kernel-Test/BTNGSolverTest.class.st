@@ -22,15 +22,15 @@ BTNGSolverTest >> testAllSolutions [
 	solutions := solver allSolutions.
 	self assert: solver explorationFinished.
 	"18 == (2 to: 10) size * (5 to: 6) size."
-	self assert: solutions asSet size = 18.
+	self assert: solutions asSet size equals: 18.
 	solutions
 		do: [:solution | 
 			value1 := solution at: variable1.
 			value2 := solution at: variable2.
-			self assert: value1 = value2.
+			self assert: value1 equals: value2.
 			value3 := solution at: variable3.
 			value4 := solution at: variable4.
-			self assert: value3 = value4]
+			self assert: value3 equals: value4]
 ]
 
 { #category : #running }
@@ -42,8 +42,8 @@ BTNGSolverTest >> testAllSolutionsOnATrivialCSP [
 	variable4 domain: #(6 ).
 	expectedSolution := Dictionary newFrom: {variable1 -> 3. variable2 -> 3. variable3 -> 6. variable4 -> 6}.
 	solutions := solver allSolutions.
-	self assert: solutions size = 1.
-	self assert: solutions anyOne = expectedSolution
+	self assert: solutions size equals: 1.
+	self assert: solutions anyOne equals: expectedSolution
 ]
 
 { #category : #running }
@@ -54,7 +54,7 @@ BTNGSolverTest >> testCspWithoutConstraint [
 		var domain: #(1 2).
 		var constraints do: [:constraintOnVar| var removeConstraint: constraintOnVar]].
 	expectedNumberOfSolutions := 16.
-	self assert: solver allSolutions size = expectedNumberOfSolutions
+	self assert: solver allSolutions size equals: expectedNumberOfSolutions
 ]
 
 { #category : #running }
@@ -126,10 +126,10 @@ BTNGSolverTest >> testFirstSolution [
 	self assert: solver solutionFound.
 	value1 := solution at: variable1.
 	value2 := solution at: variable2.
-	self assert: value1 = value2.
+	self assert: value1 equals: value2.
 	value3 := solution at: variable3.
 	value4 := solution at: variable4.
-	self assert: value3 = value4]
+	self assert: value3 equals: value4]
 ]
 
 { #category : #running }
@@ -143,7 +143,7 @@ BTNGSolverTest >> testFirstSolutionOnATrivialCSP [
 	self deny: solution isNil.
 	self assert: solver solutionFound.
 	expectedSolution := Dictionary newFrom: {variable1 -> 3. variable2 -> 3. variable3 -> 6. variable4 -> 6}.
-	self assert: solver solution = expectedSolution
+	self assert: solver solution equals: expectedSolution
 ]
 
 { #category : #running }
@@ -153,12 +153,12 @@ BTNGSolverTest >> testReset [
 		var valuesToExplore: #(1 ).
 		solver currentVariable: var.
 		solver saveContext].
-	self assert: solver contexts size = csp variables size.
+	self assert: solver contexts size equals: csp variables size.
 	solver reset.
 	csp variables do: 
 			[:var | 
-			self assert: var currentValue == nil.
-			self assert: var domain asSet = var valuesToExplore asSet].
+			self assert: var currentValue isNil.
+			self assert: var domain asSet equals: var valuesToExplore asSet].
 	self assert: solver contexts isEmpty
 ]
 
@@ -183,7 +183,7 @@ BTNGSolverTest >> testRestoreContext [
 			currentVariable := currentVars at: index.
 			solver currentVariable: currentVariable.
 			solver saveContext].
-	self assert: solver contexts asSet size = 3.
+	self assert: solver contexts size equals: 3.
 	solver contexts copy with: (1 to: 3)
 		do: 
 			[:restoredContext :index | 
@@ -191,13 +191,13 @@ BTNGSolverTest >> testRestoreContext [
 			expectedReducedDomain3 := variable3ReducedDomains at: index.
 			solver restoreContext: restoredContext.
 			self deny: (solver contexts includes: restoredContext).
-			self assert: variable1 currentValue = (variable1CurrentValues at: index).
+			self assert: variable1 currentValue equals: (variable1CurrentValues at: index).
 			self 
-				assert: variable1 valuesToExplore asSet = expectedReducedDomain1 asSet.
+				assert: variable1 valuesToExplore asSet equals: expectedReducedDomain1 asSet.
 			self 
-				assert: variable3 valuesToExplore asSet = expectedReducedDomain3 asSet.
+				assert: variable3 valuesToExplore asSet equals: expectedReducedDomain3 asSet.
 			expectedCurrentVar := currentVars at: index.
-			self assert: solver currentVariable == expectedCurrentVar]
+			self assert: solver currentVariable identicalTo: expectedCurrentVar]
 ]
 
 { #category : #running }
@@ -220,21 +220,21 @@ BTNGSolverTest >> testSaveContext [
 			variable3 valuesToExplore: reducedDomain3.
 			solver currentVariable: (currentVars at: index).
 			solver saveContext].
-	self assert: solver contexts asSet size = 3.
+	self assert: solver contexts size equals: 3.
 	1 to: 3
 		do: 
 			[:index | 
 			expectedReducedDomain1 := variable1ReducedDomains at: index.
 			expectedReducedDomain3 := variable3ReducedDomains at: index.
 			savedContext := solver contexts at: index.
-			self assert: savedContext valuesToExploreDict keys = solver variables asSet.
+			self assert: savedContext valuesToExploreDict keys asSet equals: solver variables asSet.
 			self assert: (savedContext currentValueFor: variable1)  
-						= (variable1CurrentValues at: index).
+						equals: (variable1CurrentValues at: index).
 			self assert: (savedContext valuesToExploreFor: variable1) asSet 
-						= expectedReducedDomain1 asSet.
+						equals: expectedReducedDomain1 asSet.
 			self assert: (savedContext valuesToExploreFor: variable3) asSet 
-						= expectedReducedDomain3 asSet.
-			self assert: savedContext currentVariable == (currentVars at: index)]
+						equals: expectedReducedDomain3 asSet.
+			self assert: savedContext currentVariable identicalTo: (currentVars at: index)]
 ]
 
 { #category : #running }
@@ -246,7 +246,7 @@ BTNGSolverTest >> testSolutionFound [
 	variable4 currentValue: 6.
 	self assert: solver solutionFound.
 	expectedSolution := Dictionary newFrom: {variable1->3. variable2->3. variable3->6. variable4->6}.
-	self assert: solver solution = expectedSolution.
+	self assert: solver solution equals: expectedSolution.
 	
 ]
 
@@ -260,5 +260,5 @@ BTNGSolverTest >> testSolutionFoundOnATrivialCSP [
 	solver firstSolution.
 	self assert: solver solutionFound.
 	expectedSolution := Dictionary newFrom: {variable1 -> 3. variable2 -> 3. variable3 -> 6. variable4 -> 6}.
-	self assert: solver solution = expectedSolution
+	self assert: solver solution equals: expectedSolution
 ]

@@ -14,8 +14,8 @@ BTNGAllDifferentsBinaryConstraintTest >> testArcConsistencyWithFullDomains [
 	| expectedReducedDomain |
 	constraint enforceArcConsistency.
 	expectedReducedDomain := (0 to: 10) asSet.
-	self assert: variable1 valuesToExplore asSet = expectedReducedDomain.
-	self assert: variable2 valuesToExplore asSet = expectedReducedDomain.
+	self assert: variable1 valuesToExplore asSet equals: expectedReducedDomain.
+	self assert: variable2 valuesToExplore asSet equals: expectedReducedDomain.
 	self assert: constraint isConsistent 
 ]
 
@@ -29,9 +29,9 @@ BTNGAllDifferentsBinaryConstraintTest >> testArcConsistencyWithSingletonDomainFo
 		expectedDomain1 := Set with: value.
 		variable1 valuesToExplore: expectedDomain1.
 		constraint enforceArcConsistency.
-		self assert: variable1 valuesToExplore asSet = expectedDomain1.
+		self assert: variable1 valuesToExplore asSet equals: expectedDomain1.
 		expectedDomain2 := fullDomain copyWithout: value.
-		self assert: variable2 valuesToExplore asSet = expectedDomain2.
+		self assert: variable2 valuesToExplore asSet equals: expectedDomain2.
 		self assert: constraint isConsistent ]
 
 ]
@@ -47,8 +47,8 @@ BTNGAllDifferentsBinaryConstraintTest >> testArcConsistencyWithSingletonDomainFo
 		variable2 valuesToExplore: expectedDomain2.
 		constraint enforceArcConsistency.
 		expectedDomain1 := fullDomain copyWithout: value.
-		self assert: variable1 valuesToExplore asSet = expectedDomain1.
-		self assert: variable2 valuesToExplore asSet = expectedDomain2.
+		self assert: variable1 valuesToExplore asSet equals: expectedDomain1.
+		self assert: variable2 valuesToExplore asSet equals: expectedDomain2.
 		self assert: constraint isConsistent ].
 
 ]

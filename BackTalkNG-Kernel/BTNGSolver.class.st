@@ -233,7 +233,7 @@ BTNGSolver >> stepBackward [
 
 { #category : #solving }
 BTNGSolver >> stepForward [
-	"saves the sate of the problem and chooses an instantiation to enforce"
+	"saves the state of the problem and chooses an instantiation to enforce"
 	self chooseVariableAndValue.
 	self saveContext.
 	self propagateInstantiationOfCurrentVariable.
